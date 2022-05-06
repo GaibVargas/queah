@@ -1,4 +1,3 @@
-from email.mime import image
 from tkinter import *
 
 WINDOW_WIDTH = 1024
@@ -14,6 +13,10 @@ class PlayerInterface:
     self.main_window.title("Queah")
     self.main_window.geometry(f"{WINDOW_WIDTH}x{WINDOW_HEIGHT}")
     self.main_window.resizable(False, False)
+    self.turn = True
+
+    self.blue_piece_board = PhotoImage(file="images/blue_piece_board.png")
+    self.red_piece_board = PhotoImage(file="images/red_piece_board.png")
 
     self.blue_piece = PhotoImage(file="images/blue_piece.png")
     self.reserve_frame_player1 = Frame(self.main_window)
@@ -26,7 +29,9 @@ class PlayerInterface:
     self.disable_board_place_image = PhotoImage(file="images/disable_board_place.png")
     self.board_place_image = PhotoImage(file="images/board_place.png")
     self.disable_positions = [(0, 0), (0,1), (1,0), (0,3), (0,4), (1,4), (3,0), (4,0), (4,1), (4,3), (4,4), (3,4)]
-    self.board_view = []
+    self.positions_red_pieces = [(2, 0), (2, 1), (1, 1), (1, 2)]
+    self.positions_blue_pieces = [(2, 4), (2, 3), (3, 3), (3, 2)]
+    self.board_view: list[list[Label]] = []
     for x in range(5):
       line = []
       for y in range(5):
@@ -34,7 +39,12 @@ class PlayerInterface:
         if ((x,y) in self.disable_positions):
           place_label.configure(image=self.disable_board_place_image)
         else:
-          place_label.configure(image=self.board_place_image)
+          if ((x,y) in self.positions_red_pieces):
+            place_label.configure(image=self.red_piece_board)
+          elif ((x,y) in self.positions_blue_pieces):
+            place_label.configure(image=self.blue_piece_board)
+          else:
+            place_label.configure(image=self.board_place_image)
         place_label.grid(row=x, column=y)
         place_label.bind("<Button-1>", lambda event, place_line=x, place_column=y:self.click(event, place_line, place_column))
         line.append(place_label)
@@ -46,5 +56,12 @@ class PlayerInterface:
     self.reserve_text2.grid(row=0, column=0)
   
   def click(self, event, x, y):
-    self.board_view[x][y].configure(image=self.red_piece)
-    print(f"Click: {x}x{y}")
+    if ((x,y) not in self.disable_positions):
+      image: PhotoImage
+      if (self.turn):
+        image = self.red_piece_board
+      else:
+        image = self.blue_piece_board
+      self.board_view[x][y].configure(image=image)
+      self.turn = not self.turn
+
