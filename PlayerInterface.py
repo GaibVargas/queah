@@ -15,10 +15,13 @@ class PlayerInterface:
     self.main_window.resizable(False, False)
     self.turn = True
 
+    self.disable_board_place_image = PhotoImage(file="images/disable_board_place.png")
+    self.board_place_image = PhotoImage(file="images/board_place.png")
     self.blue_piece_board = PhotoImage(file="images/blue_piece_board.png")
     self.red_piece_board = PhotoImage(file="images/red_piece_board.png")
-
     self.blue_piece = PhotoImage(file="images/blue_piece.png")
+    self.red_piece = PhotoImage(file="images/red_piece.png")
+
     self.reserve_frame_player1 = Frame(self.main_window)
     self.reserve_frame_player1.grid(row=1, column=0)
     self.reserve_text1 = Label(self.reserve_frame_player1, text=6, font="Arial 30", image=self.blue_piece, compound="center", padx=25)
@@ -26,8 +29,6 @@ class PlayerInterface:
 
     self.table_frame = Frame(self.main_window, pady=50)
     self.table_frame.grid(row=1, column=1)
-    self.disable_board_place_image = PhotoImage(file="images/disable_board_place.png")
-    self.board_place_image = PhotoImage(file="images/board_place.png")
     self.disable_positions = [(0, 0), (0,1), (1,0), (0,3), (0,4), (1,4), (3,0), (4,0), (4,1), (4,3), (4,4), (3,4)]
     self.positions_red_pieces = [(2, 0), (2, 1), (1, 1), (1, 2)]
     self.positions_blue_pieces = [(2, 4), (2, 3), (3, 3), (3, 2)]
@@ -49,13 +50,13 @@ class PlayerInterface:
         place_label.bind("<Button-1>", lambda event, place_line=x, place_column=y:self.click(event, place_line, place_column))
         line.append(place_label)
       self.board_view.append(line)
-    self.red_piece = PhotoImage(file="images/red_piece.png")
     self.reserve_frame_player2 = Frame(self.main_window, bg="yellow")
     self.reserve_frame_player2.grid(row=1, column=2)
     self.reserve_text2 = Label(self.reserve_frame_player2, text=6, font="Arial 30", image=self.red_piece, compound="center", padx=25)
     self.reserve_text2.grid(row=0, column=0)
   
   def click(self, event, x, y):
+    print(self.board_view[x][y]['imag'])
     if ((x,y) not in self.disable_positions):
       image: PhotoImage
       if (self.turn):
