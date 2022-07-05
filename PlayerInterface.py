@@ -1,6 +1,6 @@
 from tkinter import *
 
-WINDOW_WIDTH = 1024
+WINDOW_WIDTH = 746
 WINDOW_HEIGHT = 650
 
 class PlayerInterface:
@@ -24,12 +24,12 @@ class PlayerInterface:
 
     self.reserve_frame_player1 = Frame(self.main_window)
     self.reserve_frame_player1.grid(row=0, column=0)
-    self.reserve_text1 = Label(self.reserve_frame_player1, text=6, font="Arial 30", image=self.blue_piece, compound="center", padx=25)
+    self.reserve_text1 = Label(self.reserve_frame_player1, text=6, font="Arial 30", image=self.blue_piece, compound="center", padx=20)
     self.reserve_text1.grid(row=0, column=0)
 
     self.reserve_frame_player2 = Frame(self.main_window, bg="yellow")
     self.reserve_frame_player2.grid(row=0, column=2)
-    self.reserve_text2 = Label(self.reserve_frame_player2, text=6, font="Arial 30", image=self.red_piece, compound="center", padx=25)
+    self.reserve_text2 = Label(self.reserve_frame_player2, text=6, font="Arial 30", image=self.red_piece, compound="center", padx=20)
     self.reserve_text2.grid(row=0, column=0)
 
     self.message_frame = Frame(self.main_window)
