@@ -1,3 +1,3 @@
-import PlayerInterface
+import InterfaceJogador
 
-PlayerInterface.PlayerInterface()
+InterfaceJogador.InterfaceJogador()
