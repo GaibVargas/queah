@@ -3,8 +3,8 @@ from Jogador import Jogador
 
 from Tabuleiro import Tabuleiro
 
-WINDOW_WIDTH = 746
-WINDOW_HEIGHT = 650
+LARGURA_JANELA = 746
+ALTURA_JANELA = 650
 
 class PlayerInterface:
   def __init__(self):
@@ -15,7 +15,7 @@ class PlayerInterface:
 
   def fill_main_window(self):
     self.janela_principal.title("Queah")
-    self.janela_principal.geometry(f"{WINDOW_WIDTH}x{WINDOW_HEIGHT}")
+    self.janela_principal.geometry(f"{LARGURA_JANELA}x{ALTURA_JANELA}")
     self.janela_principal.resizable(False, False)
     self.turn = True
 
