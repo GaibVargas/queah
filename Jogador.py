@@ -4,7 +4,7 @@ class Jogador:
     self.pecas_tabuleiro = 4
   
   def resetarEstado(self):
-    self.pecas_reservas = 6
+    self.pecas_reservas = 7 # Só pra brincar
     self.pecas_tabuleiro = 4
 
   def decrementarSaldoReserva(self):
