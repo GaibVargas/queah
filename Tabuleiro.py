@@ -22,10 +22,10 @@ class Tabuleiro:
   def configuraEstadoInicial(self):
     self.estado = 0
     self.coord_peca_para_mover = []
-    self.mensagem = 'Oba oba'
     self.iniciarTabuleiro()
     self.definirVencedor(None)
     self.definirJogadorTurno()
+    self.mensagem = f'{self.turno_jogador.obterNome()} selecione peça para mover'
 
   def iniciarTabuleiro(self):
     posicoes_jogador1 = [(2, 0), (2, 1), (1, 1), (1, 2)]
@@ -92,7 +92,7 @@ class Tabuleiro:
   def definirVencedor(self, jogador):
     self.vencedor = jogador
   
-  def obterTabuleiro(self):
+  def obterMatrizTabuleiro(self):
     tabuleiro: list[list[int]] = []
     for i in range(5):
       linha = []

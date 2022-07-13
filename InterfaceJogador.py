@@ -15,12 +15,12 @@ class InterfaceJogador:
 
     self.tabuleiro: Tabuleiro
     self.posicoes = []
-    self.clickIniciar()
+    self.iniciar()
     self.janela_principal.mainloop()
   
-  def clickIniciar(self):
-    jogador1 = Jogador()
-    jogador2 = Jogador()
+  def iniciar(self):
+    jogador1 = Jogador('Jogador Vermelho')
+    jogador2 = Jogador('Jogador Azul')
     self.tabuleiro = Tabuleiro(jogador1, jogador2)
     self.tabuleiro.configuraEstadoInicial()
     self.iniciarGUIJogo()
@@ -43,7 +43,7 @@ class InterfaceJogador:
     self.reserva_jogador2_texto = Label(self.reserva_jogador2, text=6, font="Arial 30", image=self.imagem_peca_vermelha, compound="center", padx=20)
     self.reserva_jogador2_texto.grid(row=0, column=0)
 
-    self.mensagem = Label(self.janela_principal, text="Turno do jogador 1", font="Arial, 15", bg="red")
+    self.mensagem = Label(self.janela_principal, text="Turno do jogador 1", font="Arial, 15")
     self.mensagem.grid(row=1, column=1)
     self.botao_reiniciar = Label(self.janela_principal, text="Reiniciar", bg="gray", padx="10", pady="5", font="Arial, 15")
     self.botao_reiniciar.grid(row=1, column=2)
@@ -58,7 +58,7 @@ class InterfaceJogador:
     self.atualizarGUI()
 
   def atualizarGUI(self):
-    matrizTabuleiro = self.tabuleiro.obterTabuleiro()
+    matrizTabuleiro = self.tabuleiro.obterMatrizTabuleiro()
     self.mensagem.configure(text=self.tabuleiro.obterMensagem())
     saldos = self.tabuleiro.obterSaldoReservaJogadores()
     self.reserva_jogador1_texto.configure(text=saldos[0])

@@ -1,10 +1,11 @@
 class Jogador:
-  def __init__(self):
+  def __init__(self, nome):
     self.pecas_reservas = 6
     self.pecas_tabuleiro = 4
+    self.nome = nome
   
   def resetarEstado(self):
-    self.pecas_reservas = 7 # Só pra brincar
+    self.pecas_reservas = 6
     self.pecas_tabuleiro = 4
 
   def decrementarSaldoReserva(self):
@@ -21,3 +22,6 @@ class Jogador:
 
   def incrementarSaldoTabuleiro(self):
     self.pecas_tabuleiro += 1
+  
+  def obterNome(self):
+    return self.nome
