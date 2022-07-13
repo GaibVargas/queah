@@ -14,7 +14,7 @@ class InterfaceJogador:
     self.janela_principal.resizable(False, False)
 
     self.tabuleiro: Tabuleiro
-    self.posicoes = []
+    self.posicoes_tabuleiro = []
     self.iniciar()
     self.janela_principal.mainloop()
   
@@ -49,9 +49,22 @@ class InterfaceJogador:
     self.botao_reiniciar.grid(row=1, column=2)
     self.botao_reiniciar.bind("<Button-1>", lambda event:self.clickReiniciar())
 
-    self.tabuleiro_frame = Frame(self.janela_principal, pady=50)
+    self.tabuleiro_frame = Frame(self.janela_principal, pady=10)
     self.tabuleiro_frame.grid(row=0, column=1)
+  
+    self.iniciarGUITabuleiro()
     self.atualizarGUI()
+
+  def iniciarGUITabuleiro(self):
+    self.posicoes_tabuleiro = []
+    for x in range(5):
+      linha = []
+      for y in range(5):
+        place_label = Label(self.tabuleiro_frame, bd=0)
+        place_label.grid(row=x, column=y)
+        place_label.bind("<Button-1>", lambda event, place_line=x, place_column=y:self.clickPosicao(place_line, place_column))
+        linha.append(place_label)
+      self.posicoes_tabuleiro.append(linha[:])
 
   def clickReiniciar(self):
     self.tabuleiro.reiniciar()
@@ -71,10 +84,8 @@ class InterfaceJogador:
     ]
     for x in range(5):
       for y in range(5):
-        place_label = Label(self.tabuleiro_frame, bd=0)
-        place_label.configure(image=imagens[matrizTabuleiro[x][y]])
-        place_label.grid(row=x, column=y)
-        place_label.bind("<Button-1>", lambda event, place_line=x, place_column=y:self.click(place_line, place_column))
+        self.posicoes_tabuleiro[x][y].configure(image=imagens[matrizTabuleiro[x][y]])
 
   def clickPosicao(self, x, y):
     self.tabuleiro.selecionarPosicao(x, y)
+    self.atualizarGUI()

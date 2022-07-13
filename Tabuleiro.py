@@ -48,7 +48,18 @@ class Tabuleiro:
     self.configuraEstadoInicial()
 
   def selecionarPosicao(self, x, y):
-    print(f"{x}, {y}")
+    posicao = self.recuperarPosicao(x, y)
+    valido = posicao.obterSelecionavel()
+    if valido:
+      self.definirMensagem('Tudo certo')
+      if self.estado == 0:
+        self.selecionarPecaMover(x, y, posicao)
+      elif self.estado == 1:
+        self.selecionarDestino(x, y, posicao)
+      elif self.estado == 2:
+        self.posicionarPecaReserva(posicao)
+    else:
+      self.definirMensagem(f'Jogada inválida.\n {self.turno_jogador.obterNome()} selecione peça para mover')
 
   def recuperarPosicao(self, x, y):
     return self.posicoes[x][y]
