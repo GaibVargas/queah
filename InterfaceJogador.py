@@ -35,12 +35,12 @@ class InterfaceJogador:
 
     self.reserva_jogador1 = Frame(self.janela_principal)
     self.reserva_jogador1.grid(row=0, column=0)
-    self.reserva_jogador1_texto = Label(self.reserva_jogador1, text=6, font="Arial 30", image=self.imagem_peca_azul, compound="center", padx=20)
+    self.reserva_jogador1_texto = Label(self.reserva_jogador1, text=6, font="Arial 30", image=self.imagem_peca_vermelha, compound="center", padx=20)
     self.reserva_jogador1_texto.grid(row=0, column=0)
 
     self.reserva_jogador2 = Frame(self.janela_principal)
     self.reserva_jogador2.grid(row=0, column=2)
-    self.reserva_jogador2_texto = Label(self.reserva_jogador2, text=6, font="Arial 30", image=self.imagem_peca_vermelha, compound="center", padx=20)
+    self.reserva_jogador2_texto = Label(self.reserva_jogador2, text=6, font="Arial 30", image=self.imagem_peca_azul, compound="center", padx=20)
     self.reserva_jogador2_texto.grid(row=0, column=0)
 
     self.mensagem = Label(self.janela_principal, text="Turno do jogador 1", font="Arial, 15")
@@ -87,5 +87,7 @@ class InterfaceJogador:
         self.posicoes_tabuleiro[x][y].configure(image=imagens[matrizTabuleiro[x][y]])
 
   def clickPosicao(self, x, y):
+    if self.tabuleiro.possuiVencedor():
+      return
     self.tabuleiro.selecionarPosicao(x, y)
     self.atualizarGUI()

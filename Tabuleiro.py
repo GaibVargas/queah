@@ -89,12 +89,42 @@ class Tabuleiro:
         self.definirMensagem(f'Jogada inválida.\n {self.turno_jogador.obterNome()} escolha uma posição destino')
       elif tipo_movimento == 1 or tipo_movimento == 2:
         self.moverPeca(posicao)
-        self.definirJogadorTurno()
-        self.atualizarEstado(0)
-        self.definirMensagem(f'{self.turno_jogador.obterNome()} selecione peça para mover')
+        if tipo_movimento == 2:
+          self.removerPecaAdversario(x, y)
+          vencedor = self.verificarVencedor()
+          self.definirVencedor(vencedor)
+          if self.vencedor != None:
+            self.definirMensagem(f'{self.turno_jogador.obterNome()} venceu!')
+            return
+          if self.turno_jogador == self.jogador1:
+            adversario = self.jogador2
+          else:
+            adversario = self.jogador1
+          saldo_adversario = adversario.obterSaldoReserva()
+          self.definirJogadorTurno()
+          if saldo_adversario > 0:
+            self.atualizarEstado(2)
+            self.definirMensagem(f'{self.turno_jogador.obterNome()} selecione posição para repor peça')
+          else:
+            self.atualizarEstado(0)
+            self.definirMensagem(f'{self.turno_jogador.obterNome()} selecione peça para mover')
+        else:
+          self.definirJogadorTurno()
+          self.atualizarEstado(0)
+          self.definirMensagem(f'{self.turno_jogador.obterNome()} selecione peça para mover')
 
-  def posicionarPecaReserva(self, posicao):
-    pass
+  def posicionarPecaReserva(self, posicao: Posicao):
+    posicao_valida = posicao.posicaoVazia()
+    if not posicao_valida:
+      self.definirMensagem(f'Jogada inválida. \n{self.turno_jogador.obterNome()} selecione posição para repor peça')
+    else:
+      peca = Peca(self.turno_jogador)
+      posicao.posicionarPeca(peca)
+      self.turno_jogador.decrementarSaldoReserva()
+      self.turno_jogador.incrementarSaldoTabuleiro()
+      self.definirJogadorTurno()
+      self.atualizarEstado(0)
+      self.definirMensagem(f'{self.turno_jogador.obterNome()} selecione peça para mover')
 
   def salvarCoordPosicaoSelecionada(self, x, y):
     self.coord_peca_para_mover = [x, y]
@@ -145,13 +175,31 @@ class Tabuleiro:
     posicao.posicionarPeca(peca)
 
   def removerPecaAdversario(self, x, y):
-    pass
+    x = (x + self.coord_peca_para_mover[0])/2
+    y = (y + self.coord_peca_para_mover[1])/2
+    posicao = self.recuperarPosicao(int(x), int(y))
+    adversario = posicao.jogadorOcupante()
+    posicao.removerPeca()
+    adversario.decrementarSaldoTabuleiro()
 
   def verificarVencedor(self):
-    return self.vencedor
+    if self.turno_jogador == self.jogador1:
+      jogador_adversario = self.jogador2
+    else:
+      jogador_adversario = self.jogador1
+    saldo_adversario = jogador_adversario.obterSaldoTotal()
+    if saldo_adversario == 0:
+      return self.turno_jogador
+    else:
+      return None
   
   def definirVencedor(self, jogador):
     self.vencedor = jogador
+  
+  def possuiVencedor(self):
+    if self.vencedor == None:
+      return False
+    return True
   
   def obterMatrizTabuleiro(self):
     tabuleiro: list[list[int]] = []
