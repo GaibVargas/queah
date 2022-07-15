@@ -27,7 +27,7 @@ class Tabuleiro:
     self.iniciarTabuleiro()
     self.definirVencedor(None)
     self.definirJogadorTurno(reset=True)
-    self.mensagem = f'{self.turno_jogador.obterNome()} selecione peça para mover'
+    self.mensagem = f'{self.turno_jogador.obterNome()}\n Selecione peça para mover'
 
   def iniciarTabuleiro(self):
     posicoes_jogador1 = [(2, 0), (2, 1), (1, 1), (1, 2)]
@@ -68,11 +68,11 @@ class Tabuleiro:
   def selecionarPecaMover(self, x, y, posicao: Posicao):
     ocupante = posicao.jogadorOcupante()
     if self.turno_jogador != ocupante or ocupante == None:
-      self.definirMensagem(f'Jogada inválida.\n {self.turno_jogador.obterNome()} selecione peça para mover')
+      self.definirMensagem(f'Jogada inválida\n {self.turno_jogador.obterNome()}\n Selecione peça para mover')
     else:
       self.salvarCoordPosicaoSelecionada(x, y)
       self.atualizarEstado(1)
-      self.definirMensagem(f'{self.turno_jogador.obterNome()} selecione uma posição destino')
+      self.definirMensagem(f'{self.turno_jogador.obterNome()}\n Selecione uma posição destino')
 
   def selecionarDestino(self, x, y, posicao: Posicao):
     vazia = posicao.posicaoVazia()
@@ -82,11 +82,11 @@ class Tabuleiro:
         self.definirMensagem(f'Jogada inválida.\n {self.turno_jogador.obterNome()} escolha uma posição destino')
       else:
         self.salvarCoordPosicaoSelecionada(x, y)
-        self.definirMensagem(f'{self.turno_jogador.obterNome()} selecione uma posição destino')
+        self.definirMensagem(f'{self.turno_jogador.obterNome()}\n Selecione uma posição destino')
     else:
       tipo_movimento = self.verificarMovimento(x, y)
       if tipo_movimento == 0:
-        self.definirMensagem(f'Jogada inválida.\n {self.turno_jogador.obterNome()} escolha uma posição destino')
+        self.definirMensagem(f'Jogada inválida\n {self.turno_jogador.obterNome()}\n Escolha uma posição destino')
       elif tipo_movimento == 1 or tipo_movimento == 2:
         self.moverPeca(posicao)
         if tipo_movimento == 2:
@@ -104,19 +104,19 @@ class Tabuleiro:
           self.definirJogadorTurno()
           if saldo_adversario > 0:
             self.atualizarEstado(2)
-            self.definirMensagem(f'{self.turno_jogador.obterNome()} selecione posição para repor peça')
+            self.definirMensagem(f'{self.turno_jogador.obterNome()}\n Selecione posição para repor peça')
           else:
             self.atualizarEstado(0)
-            self.definirMensagem(f'{self.turno_jogador.obterNome()} selecione peça para mover')
+            self.definirMensagem(f'{self.turno_jogador.obterNome()}\n Selecione peça para mover')
         else:
           self.definirJogadorTurno()
           self.atualizarEstado(0)
-          self.definirMensagem(f'{self.turno_jogador.obterNome()} selecione peça para mover')
+          self.definirMensagem(f'{self.turno_jogador.obterNome()}\n Selecione peça para mover')
 
   def posicionarPecaReserva(self, posicao: Posicao):
     posicao_valida = posicao.posicaoVazia()
     if not posicao_valida:
-      self.definirMensagem(f'Jogada inválida. \n{self.turno_jogador.obterNome()} selecione posição para repor peça')
+      self.definirMensagem(f'Jogada inválida\n{self.turno_jogador.obterNome()}\n Selecione posição para repor peça')
     else:
       peca = Peca(self.turno_jogador)
       posicao.posicionarPeca(peca)
@@ -124,16 +124,13 @@ class Tabuleiro:
       self.turno_jogador.incrementarSaldoTabuleiro()
       self.definirJogadorTurno()
       self.atualizarEstado(0)
-      self.definirMensagem(f'{self.turno_jogador.obterNome()} selecione peça para mover')
+      self.definirMensagem(f'{self.turno_jogador.obterNome()}\n Selecione peça para mover')
 
   def salvarCoordPosicaoSelecionada(self, x, y):
     self.coord_peca_para_mover = [x, y]
   
   def atualizarEstado(self, valor):
     self.estado = valor
-  
-  def posicaoValidaPosicionarReserva(self, posicao):
-    pass
 
   def definirMensagem(self, mensagem):
     self.mensagem = mensagem
