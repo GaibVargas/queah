@@ -89,7 +89,7 @@ class Tabuleiro:
         self.definirMensagem(f'Jogada inválida\n {self.turno_jogador.obterNome()}\n Escolha uma posição destino')
       elif tipo_movimento == 1 or tipo_movimento == 2:
         self.moverPeca(posicao)
-        if tipo_movimento == 2:
+        if tipo_movimento == 2: # Captura
           self.removerPecaAdversario(x, y)
           vencedor = self.verificarVencedor()
           self.definirVencedor(vencedor)
@@ -108,7 +108,7 @@ class Tabuleiro:
           else:
             self.atualizarEstado(0)
             self.definirMensagem(f'{self.turno_jogador.obterNome()}\n Selecione peça para mover')
-        else:
+        else: # Movimentação simples
           self.definirJogadorTurno()
           self.atualizarEstado(0)
           self.definirMensagem(f'{self.turno_jogador.obterNome()}\n Selecione peça para mover')
